@@ -1,3 +1,15 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn import tree
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
+import sklearn.model_selection as skl_ms
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint
+
 class random_forest:
     def train(self, X_train,Y_train):
 
