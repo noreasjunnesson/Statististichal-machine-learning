@@ -5,6 +5,7 @@ from Random_forest import random_forest
 from Logistic_regression import logistic_regression
 from Naive import naive
 import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
