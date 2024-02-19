@@ -84,7 +84,7 @@ def main():
     # Train models
     trained_model_QDA = model_QDA.train(X_train,Y_train)
     trained_model_Random_forest = model_Random_forest.train(X_train,Y_train)
-    trained_model_Logistic_regression=model_Logistic_regression(X_train,Y_train)
+    trained_model_Logistic_regression=model_Logistic_regression.train(X_train,Y_train)
 
     #Predictions models
     prediction_QDA=trained_model_QDA.predict(X_test)
