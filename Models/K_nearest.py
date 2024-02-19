@@ -1,50 +1,35 @@
-import numpy as np
-import numpy.linalg as nplg
-import scipy.sparse as spsp
-import scipy.sparse.linalg as spsplg
-from numpy.linalg import norm
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-import sklearn.preprocessing as skl_pre
-import sklearn.linear_model as skl_lm
+import csv
 import sklearn.discriminant_analysis as skl_da
-import sklearn.neighbors as skl_nb
-import sklearn.model_selection as skl_ms
-
-
-from sklearn.datasets import make_blobs
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+import numpy as np
+import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import RocCurveDisplay, roc_curve
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
-from sklearn.metrics import confusion_matrix, roc_curve, auc
-from sklearn.model_selection import cross_val_score
+import seaborn as sns
+import matplotlib.pyplot as plt
+import sklearn.linear_model as skl_lm
+from sklearn.metrics import confusion_matrix, roc_curve, auc, f1_score,recall_score,precision_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint
+import sklearn.discriminant_analysis as skl_da
+from sklearn.neighbors import KNeighborsClassifier
 
 
-#k-NN with k=1
-knn1 = KNeighborsClassifier(n_neighbors=1)
-knn1.fit(X_train, Y_train)
-
-knn5 = KNeighborsClassifier(n_neighbors=5)
-knn5.fit(X_train, Y_train)
-
-#Trying different values for k
-
-misclassification=[]
-accuracy=[]
-for k in range(50):
-    model=skl_nb.KNeighborsClassifier(n_neighbors=k+1)
-    model.fit(X_train, Y_train)
-    prediction=model.predict(X_test)
-    misclassification.append(np.mean(prediction !=Y_test))
-    ac=accuracy_score(Y_test,prediction)
-    accuracy.append(ac)
-
+class k_nearest:
+  def train(self, X_train, Y_train):
+    n_fold = 10
+    cv = KFold(n_splits=n_fold, random_state=1, shuffle=True)
+    knn = KNeighborsClassifier(n_neighbors=1)
+    k_range=list(range(1,31))
+    param_grid = {
+    'n_neighbors': k_range,
+    'weights': ['uniform', 'distance'],
+    'metric': ['euclidean', 'manhattan']
+     }
+    grid_search = GridSearchCV(knn, param_grid, cv=cv, n_jobs=-1)
+    grid_search.fit(X_train, Y_train)
+    trained_knn = grid_search.best_estimator_
+    return trained_knn
 
 
 
