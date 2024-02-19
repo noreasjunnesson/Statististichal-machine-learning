@@ -1,6 +1,6 @@
 import csv
 from QDA import qda
-from Random_forst import random_forest
+from Random_forsest import random_forest
 from Logistic_regression import logistic_regression
 import numpy as np
 import pandas as pd
@@ -9,7 +9,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import sklearn.linear_model as skl_lm
 from sklearn.metrics import confusion_matrix, roc_curve, auc
-from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint
 
 def load_data(filename):
     np.random.seed(1)
