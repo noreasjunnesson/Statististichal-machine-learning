@@ -1,3 +1,6 @@
+import sklearn.discriminant_analysis as skl_da
+from sklearn.model_selection import GridSearchCV
+
 class qda:
   def train(self, X_train, Y_train):
     qda = skl_da.QuadraticDiscriminantAnalysis() #implement the qda model
