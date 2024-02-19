@@ -93,13 +93,23 @@ def main():
     accuray_QDA=np.mean(prediction_QDA == Y_test)
     accuray_Random_forest=np.mean(prediction_Random_forest == Y_test)
     accuray_Logistic_regression=np.mean(prediction_Logistic_regression == Y_test)
+    
+    #F1 score of models
+    f1_QDA = f1_score(Y_test,prediction_QDA)
+    f1_Random_forest = f1_score(Y_test,prediction_Random_forest)
+    f1_Logistic_regression = f1_score(Y_test,prediction_Logistic_regression)
 
+    
 
     # Compare results or perform further analysis
     # For example:
     print("Accuracy QDA:", accuray_QDA)
     print("Accuracy Random forest:", accuray_Random_forest)
     print("Accuracy Logistic regression:", accuray_Logistic_regression)
+    print("F1 score QDA", f1_QDA)
+    print("F1 score Random forest", f1_Random_forest)
+    print("F1 score Logistic regression", f1_Logistic_regression)
+
 
 if __name__ == "__main__":
     main()
