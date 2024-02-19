@@ -1,6 +1,7 @@
 import csv
 from model_a import ModelA
-from model_b import ModelB
+    from qda import qda
+
 
 def load_data(filename):
     # Load data from CSV file
@@ -13,7 +14,7 @@ def main():
 
     # Instantiate models
     model_a = ModelA()
-    model_b = ModelB()
+    qda = qda()
 
     # Train models
     trained_model_a = model_a.train(train_data)
