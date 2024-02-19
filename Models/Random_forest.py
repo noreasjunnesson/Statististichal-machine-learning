@@ -2,7 +2,9 @@
 class random_forest:
     def train(self, X_train,Y_train):
 
-        
+        model = RandomForestClassifier()
+        n_fold = 10
+        cv = KFold(n_splits=n_fold, random_state=1, shuffle=True)
         def random_search(X_train, Y_train):
             param_dist = {'n_estimators': randint(50, 150),  # Random integer between 50 and 150
                             'max_depth': [None, 5, 10, 20],
