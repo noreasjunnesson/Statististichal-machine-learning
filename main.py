@@ -3,6 +3,7 @@ import sklearn.discriminant_analysis as skl_da
 from QDA import qda
 from Random_forest import random_forest
 from Logistic_regression import logistic_regression
+from Naive import naive
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
