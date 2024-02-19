@@ -3,20 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-#
-#from IPython.display import set_matplotlib_formats
-#set_matplotlib_formats('png')
-#from IPython.core.pylabtools import figsize
-#figsize(10, 6) # Width and hight
-#plt.style.use('seaborn-white')
-
-
 url = 'siren_data_train.csv'
 file_path = 'siren_data_train.csv'
 siren_data= pd.read_csv(url, na_values='?', dtype={'index': str}).dropna().reset_index()
-
-#siren_data.info()
-#pd.plotting.scatter_matrix(siren_data.iloc[:,1:13],figsize=(10,10))
 
 
 x_coor=siren_data.xcoor
@@ -115,7 +104,6 @@ plt.title('Heard dependent on angle')
 plt.xlabel('Angle Range')
 plt.ylabel('Heard Percentage')
 plt.show()
-
 
 
 # Calculate the correlation matrix
