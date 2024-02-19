@@ -18,16 +18,16 @@ def main():
 
     # Train models
     trained_model_a = model_a.train(train_data)
-    trained_model_b = model_b.train(train_data)
+    trained_qda =qda.train(train_data)
 
     # Evaluate models
     results_a = evaluate_model(trained_model_a, test_data)
-    results_b = evaluate_model(trained_model_b, test_data)
+    results_qda = evaluate_model(trained_qda, test_data)
 
     # Compare results or perform further analysis
     # For example:
     print("Results from Model A:", results_a)
-    print("Results from Model B:", results_b)
+    print("Results from QDA:", results_qda)
 
 if __name__ == "__main__":
     main()
