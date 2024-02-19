@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
 import sklearn.linear_model as skl_lm
-from sklearn.metrics import confusion_matrix, roc_curve, auc, f1_score
+from sklearn.metrics import confusion_matrix, roc_curve, auc, f1_score,recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
@@ -102,7 +102,11 @@ def main():
     f1_Random_forest = f1_score(Y_test,prediction_Random_forest)
     f1_Logistic_regression = f1_score(Y_test,prediction_Logistic_regression)
 
-    
+    #Recall score of models
+    recall_QDA = recall_score(Y_test,prediction_QDA)
+    recall_Random_forest = recall_score(Y_test,prediction_Random_forest)
+    recall_Logistic_regression = recall_score(Y_test,prediction_Logistic_regression)
+
 
     # Compare results or perform further analysis
     # For example:
@@ -112,6 +116,9 @@ def main():
     print("F1 score QDA", f1_QDA)
     print("F1 score Random forest", f1_Random_forest)
     print("F1 score Logistic regression", f1_Logistic_regression)
+    print("Recall score QDA",recall_QDA)
+    print("Recall score Random forest",recall_Random_forest)
+    print("Recall score Logistic regression",recall_Logistic_regression)
 
 
 if __name__ == "__main__":
