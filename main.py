@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
 import sklearn.linear_model as skl_lm
-from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.metrics import confusion_matrix, roc_curve, auc, f1_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
