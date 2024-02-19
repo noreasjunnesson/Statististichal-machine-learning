@@ -16,7 +16,7 @@ from scipy.stats import randint
 
 def load_data(filename):
     np.random.seed(1)
-    file_path = 'filename.csv'
+    file_path = 'filename'
     siren_data_notshuffle= pd.read_csv(file_path, na_values='?', dtype={'index': str}).dropna().reset_index()
     #shuffleing the data
     siren_data = siren_data_notshuffle.sample(frac=1).reset_index(drop=True)
