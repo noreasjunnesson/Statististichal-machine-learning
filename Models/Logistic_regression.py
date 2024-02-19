@@ -12,4 +12,4 @@ class logistic_regression:
     grid_search.fit(X_train, Y_train)
     trained_log_reg = grid_search.best_estimator_
     return trained_logreg
-
+estimator=model, param_grid=param_grid, cv=cv, n_jobs=-1
