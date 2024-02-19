@@ -5,6 +5,11 @@ from Logistic_regression import logistic_regression
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import seaborn as sns
+import matplotlib.pyplot as plt
+import sklearn.linear_model as skl_lm
+from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.model_selection import GridSearchCV
 
 def load_data(filename):
     np.random.seed(1)
@@ -13,41 +18,45 @@ def load_data(filename):
     #shuffleing the data
     siren_data = siren_data_notshuffle.sample(frac=1).reset_index(drop=True)
 
-    #creating input variable distance
+    # Creating input variable distance
     y_coor=siren_data.ycoor
     x_coor=siren_data.xcoor
     near_x=siren_data.near_x
     near_y=siren_data.near_y
     coord=np.array([x_coor,y_coor])
     near= np.array([near_x, near_y])
+    
     # Calculate Euclidean distances for each pair
     distances = np.sqrt((x_coor - near_x)**2 + (y_coor - near_y)**2)
-    #heard är x^2 beroende av distance
-    distances_2=distances**2
-    #tar bort inputs som används till distances
-    columns_to_drop = ['ycoor', 'xcoor', 'near_x','near_y','near_fid']
+
+    #Drop the columns associated with coordianats
+    columns_to_drop = ['near_x', 'near_y', 'xcoor','ycoor', 'near_fid']
     siren_data = siren_data.drop(columns=columns_to_drop)
-    #lägger på distances^2
-    siren_data['distance'] = distances_2
+    
+    #Adding 'distances' to the features
+    siren_data['distances'] = distances
 
+    #Squaring the age
+    siren_data['age'] = siren_data.age**2
 
-    # Tar absolutvärdet av vinkeln
-    column_to_abs = 'near_angle'
-    # Lägger in absolut belopp
-    siren_data[column_to_abs] = siren_data[column_to_abs].abs()
+    #Taking absolut value of the near angle
+    siren_data['angle'] = abs(siren_data.near_angle)
 
-    # Kolumner att standarisera (ej binära kolumner)
-    columns_to_standardize = ['distance','near_angle','age']
-    # StandardScaler 
+    #Dropping columns again
+    columns_to_drop2 = ['near_angle','building','no_windows','noise']
+    siren_data = siren_data.drop(columns=columns_to_drop2)
+
+    #Scaling
+    features_to_scale = ['distances','angle','age']
+    selected_features = siren_data[features_to_scale]
     scaler = StandardScaler()
-    # anpassa standardaserade kolumner
-    siren_data[columns_to_standardize] = scaler.fit_transform(siren_data[columns_to_standardize])
+    scaled_features = scaler.fit_transform(selected_features)
+    siren_data[features_to_scale] = scaled_features
 
-    #np.random.seed(1)
-    #splittar upp till 75% training and validation och 25% test
+    # Splitting the data into 75% for training and validation and for 25% testing
     trainIndex=np.random.choice(siren_data.shape[0],size=int(len(siren_data)*0.75),replace=False)
     
-    #test and train
+    # Test and Train
     train=siren_data.iloc[trainIndex]
     test=siren_data.iloc[~siren_data.index.isin(trainIndex)]
 
@@ -71,7 +80,6 @@ def main():
     trained_model_QDA = model_QDA.train(X_train,Y_train)
     trained_model_Random_forest = model_Random_forest.train(X_train,Y_train)
     trained_model_Logistic_regression=model_Logistic_regression(X_train,Y_train)
-
 
     #Predictions models
     prediction_QDA=trained_model_QDA.predict(X_test)
