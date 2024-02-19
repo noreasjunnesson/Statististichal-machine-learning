@@ -1,4 +1,7 @@
 import sklearn.discriminant_analysis as skl_da
+import numpy as np
+from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.model_selection import KFold, GridSearchCV
 
 class qda:
   def train(self, X_train, Y_train):
