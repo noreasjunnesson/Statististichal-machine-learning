@@ -1,5 +1,7 @@
 class logistic_regression:
   def train(self, X_train, Y_train):
+    n_fold = 10
+    cv = KFold(n_splits=n_fold, random_state=1, shuffle=True)
     log_reg = skl_lm.LogisticRegression(max_iter=10000)
     log_reg.fit(X_train, Y_train)
     param_grid = {
