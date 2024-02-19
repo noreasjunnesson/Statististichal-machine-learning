@@ -1,4 +1,5 @@
 import csv
+import sklearn.discriminant_analysis as skl_da
 from QDA import qda
 from Random_forest import random_forest
 from Logistic_regression import logistic_regression
