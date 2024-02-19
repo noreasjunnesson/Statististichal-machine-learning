@@ -9,7 +9,6 @@ class logistic_regression:
     'solver': ['lbfgs'],  # optimization algorithm
     'penalty': ["l1","l2"] #l1 lasso, l2 ridge
     grid_search = GridSearchCV(log_reg, param_grid, cv=cv, n_jobs=-1)
-    grid_search.fit(X_train, Y_train)
-    trained_log_reg = grid_search.best_estimator_
-    return trained_logreg
+    trained_log_reg = grid_search.fit(X_train, Y_train)
+    return trained_log_reg
 
