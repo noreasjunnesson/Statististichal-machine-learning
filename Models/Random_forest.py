@@ -28,6 +28,7 @@ class random_forest:
             grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=cv, n_jobs=-1)
             grid_search.fit(X_train, Y_train)
             return grid_search.fit(X_train, Y_train)
-
+            
     trained_Random_forest=grid_search(X_train,Y_train)
-        return trained_Random_forest
+    
+    return trained_Random_forest
