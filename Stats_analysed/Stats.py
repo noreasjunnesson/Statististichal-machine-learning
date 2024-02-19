@@ -3,9 +3,21 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+#
+#from IPython.display import set_matplotlib_formats
+#set_matplotlib_formats('png')
+#from IPython.core.pylabtools import figsize
+#figsize(10, 6) # Width and hight
+#plt.style.use('seaborn-white')
+
+
 url = 'siren_data_train.csv'
 file_path = 'siren_data_train.csv'
 siren_data= pd.read_csv(url, na_values='?', dtype={'index': str}).dropna().reset_index()
+
+#siren_data.info()
+#pd.plotting.scatter_matrix(siren_data.iloc[:,1:13],figsize=(10,10))
+
 
 x_coor=siren_data.xcoor
 y_coor=siren_data.ycoor
@@ -17,6 +29,7 @@ near= np.array([near_x, near_y])
 
 # Calculate Euclidean distances for each pair
 distances = np.sqrt((x_coor - near_x)**2 + (y_coor - near_y)**2)
+
 
 #----------------------------------------------------------
 # Percentage heard for different distances
@@ -39,7 +52,8 @@ for i in range(len(distance_ranges) - 1):
     percentage_heard_dist.append(percentage)
 
 # Bar plot for percentage of people who heard the siren in each distance range
-plt.bar(range(len(percentage_heard_dist)), percentage_heard_dist)
+plt.bar(range(len(percentage_heard_dist)), percentage_heard_dist, align='center')
+plt.xticks(range(len(distance_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(distance_ranges[:-1], distance_ranges[1:])], rotation=45,fontsize=6)
 plt.title('Percentage of People Heard Siren in Each Distance Range')
 plt.xlabel('Distance Range')
 plt.ylabel('Percentage Heard')
@@ -67,10 +81,11 @@ for i in range(len(age_ranges) -1):
     percentage_heard_age.append(percentage)
     
 plt.figure()
-plt.plot(percentage_heard_age)
-plt.title('Heard dependent of age')
-plt.xlabel('age')
-plt.ylabel('heard')
+plt.bar(range(len(percentage_heard_age)), percentage_heard_age, align='center')
+plt.xticks(range(len(age_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(age_ranges[:-1], age_ranges[1:])])
+plt.title('Heard dependent on age')
+plt.xlabel('Age Range')
+plt.ylabel('Heard Percentage')
 plt.show()
 
 #----------------------------------------------------------
@@ -94,11 +109,14 @@ for i in range(len(angle_ranges) -1):
     percentage_heard_angle.append(percentage)
     
 plt.figure()
-plt.plot(percentage_heard_angle)
-plt.title('Heard dependent of angle')
-plt.xlabel('Angle')
-plt.ylabel('Heard')
+plt.bar(range(len(percentage_heard_angle)), percentage_heard_angle, align='center')
+plt.xticks(range(len(angle_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(angle_ranges[:-1], angle_ranges[1:])])
+plt.title('Heard dependent on angle')
+plt.xlabel('Angle Range')
+plt.ylabel('Heard Percentage')
 plt.show()
+
+
 
 # Calculate the correlation matrix
 correlation_matrix =siren_data.corr()
