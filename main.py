@@ -1,6 +1,6 @@
 import csv
 from QDA import qda
-from Random_forsest import random_forest
+from Random_forest import random_forest
 from Logistic_regression import logistic_regression
 import numpy as np
 import pandas as pd
