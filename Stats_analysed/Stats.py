@@ -39,9 +39,14 @@ for i in range(len(distance_ranges) - 1):
     else:
         percentage = 0
     percentage_heard_dist.append(percentage)
+    
+fit_range = 10
+coefficients = np.polyfit(range(fit_range), percentage_heard_dist[:fit_range], 1)
+linear_fit = np.poly1d(coefficients)
 
 # Bar plot for percentage of people who heard the siren in each distance range
 plt.bar(range(len(percentage_heard_dist)), percentage_heard_dist, align='center')
+plt.plot(range(fit_range), linear_fit(range(fit_range)), 'r-', label='Linear Fit')
 plt.xticks(range(len(distance_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(distance_ranges[:-1], distance_ranges[1:])], rotation=45,fontsize=6)
 plt.title('Percentage of People Heard Siren in Each Distance Range')
 plt.xlabel('Distance Range')
@@ -68,9 +73,14 @@ for i in range(len(age_ranges) -1):
     else:
         percentage = 0
     percentage_heard_age.append(percentage)
+
+x_data = np.arange(len(age_ranges) - 1)
+popt, pcov = curve_fit(square_function, x_data, percentage_heard_age)
+y_fit = square_function(x_data, *popt)
     
 plt.figure()
 plt.bar(range(len(percentage_heard_age)), percentage_heard_age, align='center')
+plt.plot(x_data, y_fit, 'r-', label='Fitted Square Function')
 plt.xticks(range(len(age_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(age_ranges[:-1], age_ranges[1:])])
 plt.title('Heard dependent on age')
 plt.xlabel('Age Range')
@@ -80,7 +90,7 @@ plt.show()
 #----------------------------------------------------------
 # Percentage heard for different angles
 #----------------------------------------------------------
-angle_ranges= [20,60,100,140,180]
+angle_ranges= [-180,-160,-140,-120,-100,-80,-60,-40,-20,-0,20,40,60,80,100,120,140,160,180]
 percentage_heard_angle=[]
 
 for i in range(len(angle_ranges) -1):
@@ -88,7 +98,7 @@ for i in range(len(angle_ranges) -1):
     upper_bound = angle_ranges[i + 1]
     in_range=[]
     for stat,ang in zip(siren_data.heard,siren_data.near_angle):
-        if lower_bound<=abs(ang)<upper_bound:
+        if lower_bound<=ang<upper_bound:
             in_range.append(stat)
     # Calculate the percentage of people who heard the siren in this range
     if in_range:
@@ -96,9 +106,16 @@ for i in range(len(angle_ranges) -1):
     else:
         percentage = 0
     percentage_heard_angle.append(percentage)
+
+coefficients_first = np.polyfit(range(first_fit_range), percentage_heard_angle[:first_fit_range], 1)
+linear_fit_first = np.poly1d(coefficients_first)
+coefficients_last = np.polyfit(range(last_fit_range), percentage_heard_angle[-last_fit_range:], 1)
+linear_fit_last = np.poly1d(coefficients_last)
     
 plt.figure()
 plt.bar(range(len(percentage_heard_angle)), percentage_heard_angle, align='center')
+plt.plot(range(first_fit_range), linear_fit_first(range(first_fit_range)), 'r-')
+plt.plot(range(len(percentage_heard_angle)-last_fit_range, len(percentage_heard_angle)), linear_fit_last(range(last_fit_range)), 'g-')
 plt.xticks(range(len(angle_ranges) - 1), [f'{lower}-{upper}' for lower, upper in zip(angle_ranges[:-1], angle_ranges[1:])])
 plt.title('Heard dependent on angle')
 plt.xlabel('Angle Range')
